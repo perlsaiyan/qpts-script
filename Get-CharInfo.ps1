@@ -1,12 +1,18 @@
+$ApiUrl  = 'https://kallisti.nonserviam.net/api/v1'
 
+$USERNAME = Read-Host "Username"
+$PWD_SECURE = Read-Host "Password" -AsSecureString
+$TokenUrl = "$ApiUrl/auth/token/login"
+$AuthParams = @{
+    "email"=$USERNAME
+    "password"= (New-Object PSCredential 0, $PWD_SECURE).GetNetworkCredential().Password
+} | ConvertTo-Json
 
-$Token = ''
+$Token = (Invoke-RestMethod -Uri $TokenUrl -Method Post -Body $AuthParams -ContentType "application/json") 
 
 $Header =  @{
-                'Authorization' = "Token $Token"
+                'Authorization' = "Token $($Token.auth_token)"
             }
-
-$ApiUrl  = 'https://kallisti.nonserviam.net/api/v1'
 
 $CharUrl = "$ApiUrl/character?page_size=1000"
 
