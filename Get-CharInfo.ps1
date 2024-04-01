@@ -1,7 +1,13 @@
 $ApiUrl  = 'https://kallisti.nonserviam.net/api/v1'
 
 $USERNAME = Read-Host "Username"
-$PWD_SECURE = Read-Host "Password" -AsSecureString
+
+if ($null -eq $env:MUD_PASSWORD) {
+  $PWD_SECURE = Read-Host "Password" -AsSecureString
+} else {
+  $PWD_SECURE = ConvertTo-SecureString "$([Environment]::GetEnvironmentVariable('MUD_PASSWORD'))" -AsPlainText -Force
+}
+
 $TokenUrl = "$ApiUrl/auth/token/login"
 $AuthParams = @{
     "email"=$USERNAME
