@@ -1,7 +1,7 @@
 
 Set-Location $PSScriptRoot
 
-Import-Module .\Questpoints.psm1
+Import-Module .\QuestPoints.psm1
 
 $Header = Get-ApiHeader
 
