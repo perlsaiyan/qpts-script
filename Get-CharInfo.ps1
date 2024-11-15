@@ -50,9 +50,10 @@ ForEach ( $Char in $Chars )
 
     $QuestsUrl = "$ApiUrl/char-quests/$($Char.name)?page_size=1000"
     
-    $Quests    = ((Invoke-WebRequest -Uri $QuestsUrl -Method Get -Header $Header).Content | ConvertFrom-Json).Results.char_quests.Where{ ($_.qpoints -gt 0) -and ($_.completed -eq $false) -and ($_.quest_name.contains('Holiday') -eq $False) -and ($_.min_level -le $Char.level) }
-
+    $Quests    = ((Invoke-WebRequest -Uri $QuestsUrl -Method Get -Header $Header).Content | ConvertFrom-Json).Results.char_quests.Where{ ($_.qpoints -gt 0) -and ($_.completed -eq $false) -and ($_.min_level -le $Char.level) }
+    
     $Quests | Format-Table quest_name, min_level, qpoints, completed
+    $Char   | Add-Member -MemberType NoteProperty -Name Quests -Value $Quests
 
     $Qps = 0
 
