@@ -107,7 +107,7 @@ Function Get-CharsQuestList
         Write-Host "TotalValue: [$($QptValue * $CharsNeedingQuest.Count)]"
         
         Write-Host "Chars needing quest:"
-        $CharsNeedingQuest.Name | Sort-Object | Out-Host
+        $CharsNeedingQuest | Sort-Object Name| Format-Table name, level, cls, hp_cfu, mp_cfu, sp_cfu | Out-Host
 
         Write-Host ('-' * 60)
     }
